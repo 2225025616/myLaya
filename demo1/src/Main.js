@@ -1,61 +1,26 @@
-(function()
-{
-    var Sprite  = Laya.Sprite;
-    var Stage   = Laya.Stage;
-    var Texture = Laya.Texture;
-    var Browser = Laya.Browser;
-    var Handler = Laya.Handler;
-    var WebGL   = Laya.WebGL;
-    var texture1 = "../../res/img1.png";
-    var texture2 = "../../res/img7.png";
-    var texture3 = "../../res/img1.png";
-    var texture4 = "../../res/img7.png";
-    var flag = false;
-    var ape;
-    (function()
-    {
-        // 不支持WebGL时自动切换至Canvas
-        Laya.init(Browser.clientWidth, Browser.clientHeight, WebGL);
-        Laya.stage.alignV = Stage.ALIGN_MIDDLE;
-        Laya.stage.alignH = Stage.ALIGN_CENTER;
-        Laya.stage.scaleMode = "showall";
-        Laya.stage.bgColor = "#232628";
-        Laya.loader.load([texture1, texture2], Handler.create(this, onAssetsLoaded));
-    })();
-    function onAssetsLoaded()
-    {
-        ape = new Sprite();
-        Laya.stage.addChild(ape);
-        ape.pivot(55, 72);
-        ape.pos(200, 200);
-        // 显示默认纹理
-        switchTexture();
-		ape.on("click", this, switchTexture); 
-		
-		//创建遮罩对象
-		var cMask = new Sprite();
-		//画一个圆形的遮罩区域
-		cMask.graphics.drawCircle(80,80,50,"#ff0000");
-			//圆形所在的位置坐标
-		cMask.pos(120,50);
-			//实现img显示对象的遮罩效果
-		ape.mask = cMask;
-		
-    }
-    function switchTexture()
-    {
-        var textureUrl = (flag = !flag) ? texture1 : texture2;
-        // 更换纹理 1
-        // ape.graphics.clear();
-        // ape.loadImage(textureUrl);
-		// var texture = Laya.loader.getRes(textureUrl);
-		//end
+(function (){
+    //初始化引擎
+    //参数一： 屏幕宽
+    //参数2: 屏幕高
+    //参数三： 非必要 是否使用webgl渲染
+    Laya.init(600,400,Laya.WebGL)
 
-		// 更换纹理 2
-        ape.graphics.clear();
-        var texture = Laya.loader.getRes(textureUrl);
-        ape.graphics.drawTexture(texture, 0, 0);
-        // 设置交互区域
-        ape.size(texture.width, texture.height);
-    }
-})();
+    // stage 舞台对象， 600*400的区域的实例
+    // 屏幕缩放模式，始终全部等比显示
+    Laya.stage.scaleMode=Laya.Stage.SCALE_SHOWALL // 始终缩放
+    // Laya.stage.scaleMode=Laya.Stage.SCALE_NOSCALE // 不缩放
+
+    // 水平对齐方式
+    Laya.stage.alignH=Laya.Stage.ALIGN_CENTER // 水平剧中
+    // 垂直对齐方式
+    Laya.stage.alignV=Laya.Stage.ALIGN_MIDDLE // 垂直剧中
+
+    // 屏幕适配——横屏或者是竖屏 
+    Laya.stage.screenMode=Laya.Stage.SCREEN_NONE // 不改变
+
+
+    // 实现hello world
+    // 舞台 stage
+    // sprite 精灵——在窗口内可见的所有的物体的顶级基础类
+
+})(); //模块化管理
